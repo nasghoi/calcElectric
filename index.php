@@ -28,6 +28,7 @@
           <form action="index.php" method="post" class="needs-validation" novalidate>
             <div class="row">
                 <?php
+
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   require_once 'function.php';
                   
@@ -79,13 +80,14 @@
                     <hr class="mb-3">
                     <button class="btn btn-primary btn-lg btn-block mb-3" type="submit">Calculate</button>
                     <div class="alert alert-primary" role="alert">
-                      <?php                          
+                      <?php
+                                           
                           if ($voltage !== null && $ampere !== null) {
                             $power = calculatePower($voltage, $ampere);
                             echo "<p class='mb-0'>Power   : $power kWh</p>";
                           }
 
-                          if ($current !== null) {
+                          if ($voltage !== null && $ampere !== null)  {
                               $rate = calculateRate($current);
                               echo "<p class='mb-0'>Rate   : $rate MYR</p>";
                           }
@@ -111,9 +113,10 @@
                 </thead>
                 <?php
 
+                if ($voltage !== null && $ampere !== null) {
                   for ($hour = 1; $hour <= 24; $hour++) {
-                    $energyPerHour = $power * $hour;
-                    $totalChargePerHour = $energyPerHour * $rate;
+                      $energyPerHour = $power * $hour;
+                      $totalChargePerHour = $energyPerHour * $rate;   
                 ?>
                 <tbody>
                 <tr>
@@ -121,7 +124,9 @@
                     echo '<th scope="row" class="text-center">'.$hour.'</th>';
                     echo '<td class="text-center">' . number_format($energyPerHour, 5) . '</td>';
                     echo '<td class="text-center">' . number_format($totalChargePerHour, 2) . '</td>';
-                  }
+                 
+                 }
+                }
                     ?>
                 </tr>
                 </tbody>
