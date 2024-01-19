@@ -28,14 +28,9 @@
           <form action="index.php" method="post" class="needs-validation" novalidate>
             <div class="row">
                 <?php
-
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                  require_once 'function.php';
-                  
-                  $voltage = isset($_POST['voltage']) ? $_POST['voltage'] : null;
-                  $ampere = isset($_POST['ampere']) ? $_POST['ampere'] : null;
-                  $current = isset($_POST['current']) ? $_POST['current'] : null;
-
+                  $voltage = 0;
+                  $ampere = 0;
+                  $current = 0;
                 ?>
                 <div class="col-md-12">
                     <!-- Voltage -->
@@ -81,6 +76,13 @@
                     <button class="btn btn-primary btn-lg btn-block mb-3" type="submit">Calculate</button>
                     <div class="alert alert-primary" role="alert">
                       <?php
+                        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                          require_once 'function.php';
+                          
+                          $voltage = isset($_POST['voltage']) ? $_POST['voltage'] : null;
+                          $ampere = isset($_POST['ampere']) ? $_POST['ampere'] : null;
+                          $current = isset($_POST['current']) ? $_POST['current'] : null;
+                                        
                                            
                           if ($voltage !== null && $ampere !== null) {
                             $power = calculatePower($voltage, $ampere);
@@ -91,7 +93,7 @@
                               $rate = calculateRate($current);
                               echo "<p class='mb-0'>Rate   : $rate MYR</p>";
                           }
-                      }
+                        
                       ?>                      
                     </div>
                 </div>
@@ -113,7 +115,6 @@
                 </thead>
                 <?php
 
-                if ($voltage !== null && $ampere !== null) {
                   for ($hour = 1; $hour <= 24; $hour++) {
                       $energyPerHour = $power * $hour;
                       $totalChargePerHour = $energyPerHour * $rate;   
