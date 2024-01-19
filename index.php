@@ -28,9 +28,9 @@
           <form action="index.php" method="post" class="needs-validation" novalidate>
             <div class="row">
                 <?php
-                  $voltage = 0;
-                  $ampere = 0;
-                  $current = 0;
+                  $voltage = null;
+                  $ampere = null;
+                  $current = null;
                 ?>
                 <div class="col-md-12">
                     <!-- Voltage -->
